@@ -14,4 +14,5 @@
 .glide/
 
 # protoc generated code
-api/
+api/*.proto
+api/*.pb.go
