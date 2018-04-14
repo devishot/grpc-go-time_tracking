@@ -11,3 +11,6 @@ proto-compile:
 
 run:
 	go run main.go
+
+test:
+	grpcc -p grpc-protofiles/time_tracking/api.proto -i -a localhost:9000 --exec ./grpcc_test.js
