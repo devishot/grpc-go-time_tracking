@@ -1,29 +1,28 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net"
 
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/grpc"
 
 	"github.com/devishot/grpc-go-time_tracking/api"
+	"github.com/devishot/grpc-go-time_tracking/handler"
 )
 
 func main() {
-	r := &api.TimeRecord{}
-	r.Amount = 30 // 30 minutes = 0.5 hour
-	r.Description = "Read laws"
-
-	out, err := proto.Marshal(r)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 9000))
 	if err != nil {
-		log.Fatalln("Failed to encode time record:", err)
-		return
+		log.Fatalf("failed to listen: %v", err)
 	}
 
-	r2 := &api.TimeRecord{}
-	err2 := proto.Unmarshal(out, r2)
-	if err2 != nil {
-		log.Fatalln("Failed to decode time record:", err2)
-	}
+	handler := &handler.Server{}
+	grpcServer := grpc.NewServer()
 
-	log.Println("decoded data:", r2.String())
+	api.RegisterTimeTrackingServer(grpcServer, handler)
+
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %s", err)
+	}
 }
