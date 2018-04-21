@@ -3,7 +3,9 @@ package handler
 import (
 	"context"
 
+	"github.com/devishot/grpc-go-time_tracking/app"
 	"github.com/devishot/grpc-go-time_tracking/interface/api"
+	"github.com/devishot/grpc-go-time_tracking/interface/factory"
 )
 
 // Server represents the gRPC server
@@ -11,16 +13,31 @@ type Server struct {
 }
 
 func (s *Server) CreateRecord(ctx context.Context, in *api.TimeRecord) (*api.TimeRecord, error) {
-	return in, nil
+	f := factory.NewTimeRecordDomainFactory(in)
+
+	record, err := s.AppService().CreateRecord(f.GetOwnerId(), f.GetProjectId(), f.DomainObject)
+	if err != nil {
+		return nil, err
+	}
+
+	return factory.NewTimeRecordMessageFactory(record).Message, nil
 }
 
 func (s *Server) DeleteRecord(ctx context.Context, in *api.DeleteRecordRequest) (*api.TimeRecord, error) {
-	out := &api.TimeRecord{}
-	out.Id = in.Id
-	return out, nil
+	err := s.AppService().DeleteRecord(in.Id)
+	msg := &api.TimeRecord{Id: in.Id}
+	return msg, err
 }
 
 func (s *Server) AllRecords(ctx context.Context, in *api.AllRecordsRequest) (*api.TimeRecords, error) {
-	results := &api.TimeRecords{}
-	return results, nil
+	records, err := s.AppService().AllRecords(in.UserId, in.ProjectId)
+	if err != nil {
+		return nil, err
+	}
+
+	return factory.NewTimeRecordsMessageFactory(records).Message, nil
+}
+
+func (s *Server) AppService() *app.Service {
+	return &app.Service{}
 }
