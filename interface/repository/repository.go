@@ -23,18 +23,18 @@ func (tr *TimeRecordRepository) Store(*app.TimeRecordEntity) (*app.TimeRecordEnt
 	return &app.TimeRecordEntity{}, nil
 }
 
-func (tr *TimeRecordRepository) DeleteById(id string) error {
+func (tr *TimeRecordRepository) DeleteByID(id string) error {
 	return nil
 }
 
-func (tr *TimeRecordRepository) GetById(id string) (*app.TimeRecordEntity, error) {
+func (tr *TimeRecordRepository) GetByID(id string) (*app.TimeRecordEntity, error) {
 	return &app.TimeRecordEntity{}, nil
 }
 
-func (tr *TimeRecordRepository) GetByOwnerId(userID string) ([]*app.TimeRecordEntity, error) {
+func (tr *TimeRecordRepository) GetByOwnerID(userID string) ([]*app.TimeRecordEntity, error) {
 	return make([]*app.TimeRecordEntity, 0), nil
 }
 
-func (tr *TimeRecordRepository) GetByProjectId(projectID string) ([]*app.TimeRecordEntity, error) {
+func (tr *TimeRecordRepository) GetByProjectID(projectID string) ([]*app.TimeRecordEntity, error) {
 	return make([]*app.TimeRecordEntity, 0), nil
 }

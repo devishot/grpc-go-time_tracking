@@ -3,6 +3,7 @@ godep-install:
 	go get google.golang.org/grpc
 	go get github.com/lib/pq
 	go get github.com/BurntSushi/toml
+	go get github.com/satori/go.uuid
 
 proto-update:
 	git submodule update --init --recursive

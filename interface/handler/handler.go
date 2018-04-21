@@ -16,7 +16,7 @@ type Server struct {
 func (s *Server) CreateRecord(ctx context.Context, in *api.TimeRecord) (*api.TimeRecord, error) {
 	f := factory.NewTimeRecordDomainFactory(in)
 
-	record, err := s.AppService().CreateRecord(f.GetOwnerId(), f.GetProjectId(), f.DomainObject)
+	record, err := s.AppService().CreateRecord(f.GetOwnerID(), f.GetProjectID(), f.DomainObject)
 	if err != nil {
 		return nil, err
 	}

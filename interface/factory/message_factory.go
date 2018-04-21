@@ -18,27 +18,27 @@ func NewTimeRecordMessageFactory(obj *app.TimeRecordEntity) *TimeRecordMessageFa
 
 func (f *TimeRecordMessageFactory) Build() {
 	f.Message = &api.TimeRecord{
-		Id:          f.DomainObject.Id,
+		Id:          f.DomainObject.ID,
 		Amount:      f.DomainObject.Amount,
-		Timestamp:   f.DomainObject.Timestamp,
+		Timestamp:   f.DomainObject.Timestamp.Unix(),
 		Description: f.DomainObject.Description,
-		UserId:      f.GetUserId(),
-		ProjectId:   f.GetProjectId(),
+		UserId:      f.GetUserID(),
+		ProjectId:   f.GetProjectID(),
 	}
 }
 
-func (f *TimeRecordMessageFactory) GetUserId() string {
+func (f *TimeRecordMessageFactory) GetUserID() string {
 	owner := f.DomainObject.Owner
 	if owner != nil {
-		return owner.Id
+		return owner.ID
 	}
 	return ""
 }
 
-func (f *TimeRecordMessageFactory) GetProjectId() string {
+func (f *TimeRecordMessageFactory) GetProjectID() string {
 	project := f.DomainObject.Project
 	if project != nil {
-		return project.Id
+		return project.ID
 	}
 	return ""
 }

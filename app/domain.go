@@ -1,34 +1,49 @@
 package app
 
+import (
+	"time"
+
+	"github.com/satori/go.uuid"
+)
+
 type TimeRecordRepository interface {
 	Store(*TimeRecordEntity) (*TimeRecordEntity, error)
-	DeleteById(string) error
-	GetById(string) (*TimeRecordEntity, error)
-	GetByOwnerId(string) ([]*TimeRecordEntity, error)
-	GetByProjectId(string) ([]*TimeRecordEntity, error)
+	DeleteByID(string) error
+	GetByID(string) (*TimeRecordEntity, error)
+	GetByOwnerID(string) ([]*TimeRecordEntity, error)
+	GetByProjectID(string) ([]*TimeRecordEntity, error)
 }
 
 type UserRepository interface {
-	GetById(string) (*UserEntity, error)
+	GetByID(string) (*UserEntity, error)
 }
 
 type ProjectRepository interface {
-	GetById(string) (*ProjectEntity, error)
+	GetByID(string) (*ProjectEntity, error)
 }
 
 type TimeRecordEntity struct {
-	Id          string
+	ID          string
 	Amount      int32
-	Timestamp   int64
+	Timestamp   time.Time
 	Description string
 	Owner       *UserEntity
 	Project     *ProjectEntity
 }
 
+func (t *TimeRecordEntity) generateID() {
+	uuid := uuid.Must(uuid.NewV4())
+	t.ID = uuid.String()
+}
+
+func (t *TimeRecordEntity) generateTimestamp() {
+	t.Timestamp = time.Now()
+}
+
 type UserEntity struct {
-	Id string
+	ID string
 }
 
 type ProjectEntity struct {
-	Id string
+	ID string
 }

@@ -1,6 +1,8 @@
 package factory
 
 import (
+	"time"
+
 	"github.com/devishot/grpc-go-time_tracking/app"
 	"github.com/devishot/grpc-go-time_tracking/interface/api"
 )
@@ -18,17 +20,17 @@ func NewTimeRecordDomainFactory(m *api.TimeRecord) *TimeRecordDomainFactory {
 
 func (f *TimeRecordDomainFactory) Build() {
 	f.DomainObject = &app.TimeRecordEntity{
-		Id:          f.Message.Id,
+		ID:          f.Message.Id,
 		Amount:      f.Message.Amount,
-		Timestamp:   f.Message.Timestamp,
+		Timestamp:   time.Unix(f.Message.Timestamp, 0),
 		Description: f.Message.Description,
 	}
 }
 
-func (f *TimeRecordDomainFactory) GetOwnerId() string {
+func (f *TimeRecordDomainFactory) GetOwnerID() string {
 	return f.Message.UserId
 }
 
-func (f *TimeRecordDomainFactory) GetProjectId() string {
+func (f *TimeRecordDomainFactory) GetProjectID() string {
 	return f.Message.ProjectId
 }

@@ -7,24 +7,26 @@ type Service struct {
 }
 
 func (s *Service) CreateRecord(userID string, projectID string, record *TimeRecordEntity) (*TimeRecordEntity, error) {
-	owner, err := s.UserRepository.GetById(userID)
+	owner, err := s.UserRepository.GetByID(userID)
 	if err != nil {
 		return nil, err
 	}
 
-	project, err := s.ProjectRepository.GetById(projectID)
+	project, err := s.ProjectRepository.GetByID(projectID)
 	if err != nil {
 		return nil, err
 	}
 
 	record.Owner = owner
 	record.Project = project
+	record.generateID()
+	record.generateTimestamp()
 
 	return s.TimeRecordRepository.Store(record)
 }
 
 func (s *Service) DeleteRecord(recordID string) error {
-	return s.TimeRecordRepository.DeleteById(recordID)
+	return s.TimeRecordRepository.DeleteByID(recordID)
 }
 
 func (s *Service) AllRecords(userID string, projectID string) ([]*TimeRecordEntity, error) {
@@ -32,9 +34,9 @@ func (s *Service) AllRecords(userID string, projectID string) ([]*TimeRecordEnti
 	var err error
 
 	if userID != "" {
-		records, err = s.TimeRecordRepository.GetByOwnerId(userID)
+		records, err = s.TimeRecordRepository.GetByOwnerID(userID)
 	} else if projectID != "" {
-		records, err = s.TimeRecordRepository.GetByProjectId(projectID)
+		records, err = s.TimeRecordRepository.GetByProjectID(projectID)
 	}
 
 	return records, err
