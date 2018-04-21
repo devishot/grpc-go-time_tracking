@@ -28,19 +28,11 @@ func (f *TimeRecordMessageFactory) Build() {
 }
 
 func (f *TimeRecordMessageFactory) GetUserID() string {
-	owner := f.DomainObject.Owner
-	if owner != nil {
-		return owner.ID
-	}
-	return ""
+	return f.DomainObject.GetUserID()
 }
 
 func (f *TimeRecordMessageFactory) GetProjectID() string {
-	project := f.DomainObject.Project
-	if project != nil {
-		return project.ID
-	}
-	return ""
+	return f.DomainObject.GetProjectID()
 }
 
 type TimeRecordsMessageFactory struct {

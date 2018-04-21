@@ -4,6 +4,7 @@ import (
 	"github.com/devishot/grpc-go-time_tracking/app"
 	"github.com/devishot/grpc-go-time_tracking/infrastructure/database"
 	"github.com/devishot/grpc-go-time_tracking/infrastructure/database/table"
+	"github.com/devishot/grpc-go-time_tracking/interface/factory"
 )
 
 type TimeRecordRepository struct {
@@ -19,8 +20,15 @@ func NewTimeRecordRepository(db *database.DB) (*TimeRecordRepository, error) {
 	return &TimeRecordRepository{table: table}, nil
 }
 
-func (tr *TimeRecordRepository) Store(*app.TimeRecordEntity) (*app.TimeRecordEntity, error) {
-	return &app.TimeRecordEntity{}, nil
+func (tr *TimeRecordRepository) Store(obj *app.TimeRecordEntity) (*app.TimeRecordEntity, error) {
+	f := factory.TimeRecordRowFactory{}
+
+	row, err := tr.table.Insert(f.GetRow(obj))
+	if err != nil {
+		return nil, err
+	}
+
+	return f.GetDomain(row), nil
 }
 
 func (tr *TimeRecordRepository) DeleteByID(id string) error {

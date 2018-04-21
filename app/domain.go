@@ -31,6 +31,22 @@ type TimeRecordEntity struct {
 	Project     *ProjectEntity
 }
 
+func (t *TimeRecordEntity) GetUserID() string {
+	owner := t.Owner
+	if owner != nil {
+		return owner.ID
+	}
+	return ""
+}
+
+func (t *TimeRecordEntity) GetProjectID() string {
+	project := t.Project
+	if project != nil {
+		return project.ID
+	}
+	return ""
+}
+
 func (t *TimeRecordEntity) generateID() {
 	uuid := uuid.Must(uuid.NewV4())
 	t.ID = uuid.String()
