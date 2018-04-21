@@ -1,3 +1,0 @@
-[submodule "grpc-protofiles"]
-	path = grpc-protofiles
-	url = https://github.com/devishot/grpc-protofiles
