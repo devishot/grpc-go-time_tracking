@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/devishot/grpc-go-time_tracking/api"
+	"github.com/devishot/grpc-go-time_tracking/interface/api"
 )
 
 // Server represents the gRPC server

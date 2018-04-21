@@ -7,8 +7,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/devishot/grpc-go-time_tracking/api"
-	"github.com/devishot/grpc-go-time_tracking/handler"
+	"github.com/devishot/grpc-go-time_tracking/interface/api"
+	"github.com/devishot/grpc-go-time_tracking/interface/handler"
 )
 
 func main() {
