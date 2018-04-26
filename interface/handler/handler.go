@@ -33,7 +33,7 @@ func (s *Server) DeleteRecord(ctx context.Context, in *api.DeleteRecordRequest) 
 }
 
 func (s *Server) AllRecords(ctx context.Context, in *api.AllRecordsRequest) (*api.TimeRecords, error) {
-	records, err := s.AppService().AllRecords(in.UserId, in.ProjectId)
+	records, err := s.AppService().AllRecords(in.GetUserId(), in.GetProjectId())
 	if err != nil {
 		return nil, err
 	}
