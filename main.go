@@ -27,20 +27,30 @@ func main() {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
 	checkError(err)
 
-	// init repositories
+	// init database
 	db, err := database.New(cfg.Database)
 	checkError(err)
 	defer db.Close()
 
-	tr, err := repository.NewTimeRecordRepository(db)
-	checkError(err)
+	// init repositories
+  pr, err := repository.NewProjectRepository(db)
+  checkError(err)
+
+  ur, err := repository.NewUserRepository(db)
+  checkError(err)
+
+  tr, err := repository.NewTimeRecordRepository(db)
+  checkError(err)
 
 	// init gRPC server
-	handler := &handler.Server{TimeRecordRepository: tr}
+	grpcHandler := &handler.Server{
+	  TimeRecordRepository: tr,
+	  ProjectRepository: pr,
+	  UserRepository: ur}
 	grpcServer := grpc.NewServer()
 
 	// register gRPC handler
-	api.RegisterTimeTrackingServer(grpcServer, handler)
+	api.RegisterTimeTrackingServer(grpcServer, grpcHandler)
 
 	// start gRPC server
 	err = grpcServer.Serve(lis)

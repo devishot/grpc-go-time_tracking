@@ -11,6 +11,8 @@ import (
 // Server represents the gRPC server
 type Server struct {
 	TimeRecordRepository app.TimeRecordRepository
+	ProjectRepository app.ProjectRepository
+	UserRepository app.UserRepository
 }
 
 func (s *Server) CreateRecord(ctx context.Context, in *api.TimeRecord) (*api.TimeRecord, error) {
@@ -40,5 +42,9 @@ func (s *Server) AllRecords(ctx context.Context, in *api.AllRecordsRequest) (*ap
 }
 
 func (s *Server) AppService() *app.Service {
-	return &app.Service{TimeRecordRepository: s.TimeRecordRepository}
+	return &app.Service{
+	  TimeRecordRepository: s.TimeRecordRepository,
+    ProjectRepository: s.ProjectRepository,
+    UserRepository: s.UserRepository,
+  }
 }

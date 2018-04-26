@@ -37,3 +37,39 @@ func (f *TimeRecordRowFactory) GetDomain(r table.TimeRecordRow) *app.TimeRecordE
 
 	return d
 }
+
+
+type UserRowFactory struct {
+}
+
+func (f *UserRowFactory) GetRow(d *app.UserEntity) table.UserRow {
+  return table.UserRow{
+    ID:          d.ID,
+  }
+}
+
+func (f *UserRowFactory) GetDomain(r table.UserRow) *app.UserEntity {
+  d := &app.UserEntity{
+    ID:          r.ID,
+  }
+
+  return d
+}
+
+
+type ProjectRowFactory struct {
+}
+
+func (f *ProjectRowFactory) GetRow(d *app.ProjectEntity) table.ClientProjectRow {
+  return table.ClientProjectRow{
+    ID:          d.ID,
+  }
+}
+
+func (f *ProjectRowFactory) GetDomain(r table.ClientProjectRow) *app.ProjectEntity {
+  d := &app.ProjectEntity{
+    ID:          r.ID,
+  }
+
+  return d
+}

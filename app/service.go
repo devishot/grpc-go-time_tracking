@@ -7,7 +7,6 @@ type Service struct {
 }
 
 func (s *Service) CreateRecord(userID string, projectID string, record *TimeRecordEntity) (*TimeRecordEntity, error) {
-	/*TODO uncomment it
 	owner, err := s.UserRepository.GetByID(userID)
 	if err != nil {
 		return nil, err
@@ -20,7 +19,6 @@ func (s *Service) CreateRecord(userID string, projectID string, record *TimeReco
 
 	record.Owner = owner
 	record.Project = project
-	*/
 	record.generateID()
 	record.generateTimestamp()
 
@@ -34,7 +32,7 @@ func (s *Service) DeleteRecord(recordID string) error {
 func (s *Service) AllRecords(userID string, projectID string) ([]*TimeRecordEntity, error) {
 	var records []*TimeRecordEntity
 	var err error
-
+	
 	if userID != "" {
 		records, err = s.TimeRecordRepository.GetByOwnerID(userID)
 	} else if projectID != "" {

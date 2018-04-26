@@ -46,10 +46,32 @@ func (tr *TimeRecordRepository) GetByID(id string) (*app.TimeRecordEntity, error
 	return f.GetDomain(row), nil
 }
 
-func (tr *TimeRecordRepository) GetByOwnerID(userID string) ([]*app.TimeRecordEntity, error) {
-	return make([]*app.TimeRecordEntity, 0), nil
+func (tr *TimeRecordRepository) GetByOwnerID(userID string) (results []*app.TimeRecordEntity, err error) {
+  f := factory.TimeRecordRowFactory{}
+
+  rows, err := tr.table.FindByUserID(userID)
+  if err != nil {
+    return
+  }
+
+  for _, v := range rows {
+    results = append(results, f.GetDomain(v))
+  }
+
+	return
 }
 
-func (tr *TimeRecordRepository) GetByProjectID(projectID string) ([]*app.TimeRecordEntity, error) {
-	return make([]*app.TimeRecordEntity, 0), nil
+func (tr *TimeRecordRepository) GetByProjectID(projectID string) (results []*app.TimeRecordEntity, err error) {
+  f := factory.TimeRecordRowFactory{}
+
+  rows, err := tr.table.FindByProjectID(projectID)
+  if err != nil {
+    return
+  }
+
+  for _, v := range rows {
+    results = append(results, f.GetDomain(v))
+  }
+
+  return
 }
