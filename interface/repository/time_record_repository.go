@@ -12,12 +12,12 @@ type TimeRecordRepository struct {
 }
 
 func NewTimeRecordRepository(db *database.DB) (*TimeRecordRepository, error) {
-	table, err := table.NewTimeRecordTable(db)
+	t, err := table.NewTimeRecordTable(db)
 	if err != nil {
 		return nil, err
 	}
 
-	return &TimeRecordRepository{table: table}, nil
+	return &TimeRecordRepository{table: t}, nil
 }
 
 func (tr *TimeRecordRepository) Store(obj *app.TimeRecordEntity) (*app.TimeRecordEntity, error) {

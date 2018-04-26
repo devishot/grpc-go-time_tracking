@@ -14,7 +14,7 @@
 .idea/
 
 # NPM cache
-interface/grpc-tests/node_modules/*
+interface/tests/node_modules/*
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
