@@ -1,0 +1,15 @@
+{
+  "name": "grpc-tests",
+  "version": "1.0.0",
+  "description": "npm package for testing purpose",
+  "main": "",
+  "scripts": {
+    "test": "mocha grpc_test.js"
+  },
+  "author": "Sattar Stamkulov",
+  "license": "ISC",
+  "devDependencies": {
+    "grpc.client": "^4.0.0",
+    "mocha": "^5.1.1"
+  }
+}

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS time_record (
 	description text NOT NULL
 )`
 	if _, err := t.DB.Conn.Exec(q); err != nil {
-		return fmt.Errorf("when: create table | error: %s", err.Error())
+		return fmt.Errorf("when: create table | table: TimeRecordTable | error: %s", err.Error())
 	}
 	return nil
 }
@@ -62,7 +62,36 @@ RETURNING
 	err = t.DB.Conn.QueryRow(q, row.ID, row.Amount, row.Description).
 		Scan(&newRow.ID, &newRow.Amount, &newRow.Timestamp, &newRow.Description)
 	if err != nil {
-		return newRow, fmt.Errorf("when: insert row at TimeRecordTable | error: %s", err.Error())
+		return newRow, fmt.Errorf("when: insert row | table: TimeRecordTable | error: %s", err.Error())
+	}
+
+	return
+}
+
+func (t *TimeRecordTable) Delete(id string) (err error) {
+	const q = `
+DELETE FROM time_record
+WHERE id = $1
+`
+	if _, err := t.DB.Conn.Exec(q, id); err != nil {
+		return fmt.Errorf("when: delete row | table: TimeRecordTable | error: %s", err.Error())
+	}
+	return nil
+}
+
+func (t *TimeRecordTable) FindByID(id string) (newRow TimeRecordRow, err error) {
+	const q = `
+SELECT
+	id, amount, timestamp, description
+FROM
+	time_record
+WHERE
+	id = $1
+`
+	err = t.DB.Conn.QueryRow(q, id).
+		Scan(&newRow.ID, &newRow.Amount, &newRow.Timestamp, &newRow.Description)
+	if err != nil {
+		return newRow, fmt.Errorf("when: find by id | table: TimeRecordTable | error: %s", err.Error())
 	}
 
 	return

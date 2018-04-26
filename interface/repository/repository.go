@@ -32,11 +32,18 @@ func (tr *TimeRecordRepository) Store(obj *app.TimeRecordEntity) (*app.TimeRecor
 }
 
 func (tr *TimeRecordRepository) DeleteByID(id string) error {
-	return nil
+	return tr.table.Delete(id)
 }
 
 func (tr *TimeRecordRepository) GetByID(id string) (*app.TimeRecordEntity, error) {
-	return &app.TimeRecordEntity{}, nil
+	f := factory.TimeRecordRowFactory{}
+
+	row, err := tr.table.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return f.GetDomain(row), nil
 }
 
 func (tr *TimeRecordRepository) GetByOwnerID(userID string) ([]*app.TimeRecordEntity, error) {

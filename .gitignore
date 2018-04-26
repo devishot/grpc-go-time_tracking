@@ -10,6 +10,12 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# IDE files
+.idea/
+
+# NPM cache
+interface/grpc-tests/node_modules/*
+
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 

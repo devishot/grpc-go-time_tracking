@@ -16,4 +16,4 @@ run:
 	go run main.go
 
 test:
-	grpcc -p interface/grpc-protofiles/time_tracking/api.proto -i -a localhost:9000 --exec interface/grpcc_test.js
+	npm test
