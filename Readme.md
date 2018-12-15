@@ -26,7 +26,8 @@ gRPC handlers, factory protobuf messages, map database operations into repositor
     * TableRow <-> Domain
     * Message -> Domain
     * Message <- Domain
-* `grpc-protofiles/` - git-submodule stores all protofiles across apps
+* `grpc-protofiles/` - git-submodule stores all protofiles across apps;
+    It configured in `.gitmodules` files under root folder;
 * `handler/` - implements gRPC handlers
 * `repository/` - implements `app/` Repositories.
 Using database commands from `infrastructure/`
